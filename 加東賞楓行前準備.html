@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>加東賞楓行前準備</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: 標題 → 黏頂進度條 → ①必帶證件（打勾）→ ②每日天氣（分類篩選＋溫度條＋卡片）→ ③配合天氣的打包清單（打勾） */
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --fg:#1B232E; --muted:#5B6776; --line:#DCE1E7;
+  --accent:#A8322A; --accent-bg:#F7E4E1; --ok:#2E7D4F;
+  --rain:#2F6DB5; --rain-bg:#E3EDF8;
+  --cold:#2B8A9A; --cold-bg:#DDF1F3;
+  --wind:#7A5BB0; --wind-bg:#ECE6F6;
+  --mild:#B7791F; --mild-bg:#FBF0DC;
+  --bar-cold:#4FA3C7; --bar-warm:#E0913A;
+  --display:"Noto Serif TC",serif; --body:"Noto Sans TC",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12171E; --surface:#1B222C; --fg:#E7ECF2; --muted:#9AA6B4; --line:#2C3542;
+  --accent:#E0665C; --accent-bg:#3A2020; --ok:#5CC48A;
+  --rain:#7FB0EC; --rain-bg:#1D2C40; --cold:#6FCAD6; --cold-bg:#173237;
+  --wind:#B79BE6; --wind-bg:#2A2340; --mild:#E7B25A; --mild-bg:#352A17;
+  --bar-cold:#5FB4D8; --bar-warm:#EAA256; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171E; --surface:#1B222C; --fg:#E7ECF2; --muted:#9AA6B4; --line:#2C3542;
+  --accent:#E0665C; --accent-bg:#3A2020; --ok:#5CC48A;
+  --rain:#7FB0EC; --rain-bg:#1D2C40; --cold:#6FCAD6; --cold-bg:#173237;
+  --wind:#B79BE6; --wind-bg:#2A2340; --mild:#E7B25A; --mild-bg:#352A17;
+  --bar-cold:#5FB4D8; --bar-warm:#EAA256; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.65;font-size:15px}
+.wrap{max-width:960px;margin:0 auto;padding-inline:16px;padding-block:28px 56px;display:grid;gap:30px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:900;letter-spacing:.02em}
+h2{font-size:1.3rem;font-weight:600}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+.lede{color:var(--muted);margin:.4rem 0 0;max-width:62ch}
+.sec{display:grid;gap:14px}
+.sec-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sec-head .n{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+.sec-head p{margin:0;color:var(--muted);font-size:.9rem;flex-basis:100%}
+.notice{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.9rem;color:var(--muted)}
+.notice b{color:var(--fg)}
+
+/* progress */
+.progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+.progress .track2{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.progress .fill{height:100%;width:0;background:var(--ok);transition:width .25s}
+.progress .txt{font-family:var(--mono);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* checklist */
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.group{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.group.key{border:2px solid var(--accent)}
+.group h3{margin:0 0 4px;font-size:1rem;display:flex;justify-content:space-between;gap:8px}
+.group h3 .cnt{font-family:var(--mono);font-size:.8rem;color:var(--muted);font-weight:500}
+.group h3 .cnt.done{color:var(--ok)}
+.item{display:flex;gap:10px;align-items:flex-start;padding:6px 4px;border-radius:8px;cursor:pointer}
+.item:hover{background:var(--bg)}
+.item input{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin:1px 0 0;border:2px solid var(--muted);border-radius:5px;background:var(--surface);cursor:pointer;display:grid;place-content:center}
+.item input::after{content:"";width:6px;height:11px;border:solid var(--surface);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px);opacity:0}
+.item input:checked{background:var(--ok);border-color:var(--ok)}
+.item input:checked::after{opacity:1}
+.item input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.item .t{min-width:0}
+.item .t small{display:block;color:var(--muted);font-size:.82rem;line-height:1.5}
+.item input:checked + .t > span{text-decoration:line-through;color:var(--muted)}
+.why{display:inline-block;font-size:.72rem;font-weight:700;padding:0 7px;border-radius:999px;margin-left:6px;vertical-align:1px;text-decoration:none}
+
+/* weather */
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.sum{border-radius:10px;padding:14px;display:grid;gap:4px;cursor:pointer;border:2px solid transparent;text-align:left;font:inherit;color:inherit}
+.sum:focus-visible,.filter button:focus-visible,.reset:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sum[aria-pressed="true"]{border-color:currentColor}
+.sum .k{font-weight:700;font-size:1.05rem}
+.sum .d{font-family:var(--mono);font-size:.85rem}
+.sum p{margin:0;font-size:.88rem;color:var(--fg)}
+.t-rain{background:var(--rain-bg);color:var(--rain)} .t-cold{background:var(--cold-bg);color:var(--cold)}
+.t-wind{background:var(--wind-bg);color:var(--wind)} .t-mild{background:var(--mild-bg);color:var(--mild)}
+.filter{display:flex;flex-wrap:wrap;gap:8px}
+.filter button{font:inherit;font-size:.88rem;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.filter button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto}
+.rows{display:grid;gap:6px;min-width:480px}
+.row{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:12px;transition:opacity .2s}
+.row.dim{opacity:.25}
+.row .lab{font-size:.85rem;white-space:nowrap}
+.row .lab span{font-family:var(--mono);color:var(--muted);margin-right:6px}
+.track{position:relative;height:22px;border-left:1px solid var(--line)}
+.grid{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(25% - 1px),var(--line) calc(25% - 1px) 25%)}
+.bar{position:absolute;top:4px;height:14px;border-radius:7px;background:linear-gradient(90deg,var(--bar-cold),var(--bar-warm))}
+.bar b{position:absolute;top:-2px;font-family:var(--mono);font-size:.74rem;font-weight:500;color:var(--fg);white-space:nowrap}
+.bar .lo{right:calc(100% + 5px)} .bar .hi{left:calc(100% + 5px)}
+.axis{display:grid;grid-template-columns:120px 1fr;gap:12px;min-width:480px;margin-top:4px}
+.ticks{position:relative;height:16px;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.ticks span{position:absolute;transform:translateX(-50%)}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.day header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.day .dn{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+.day h3{margin:0;font-size:1.02rem;font-weight:700}
+.temp{font-family:var(--display);font-size:1.5rem;font-weight:900;font-variant-numeric:tabular-nums}
+.temp small{display:block;font-family:var(--body);font-size:.82rem;font-weight:400;color:var(--muted)}
+.src{font-size:.72rem;color:var(--muted);font-family:var(--mono)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.75rem;font-weight:700;padding:2px 9px;border-radius:999px}
+.day ul{margin:0;padding-left:1.1em;font-size:.9rem;display:grid;gap:2px}
+.day .wear{font-size:.9rem;border-top:1px dashed var(--line);padding-top:8px}
+.day .wear b{color:var(--muted);font-weight:500;margin-right:4px}
+.reset{justify-self:center;font:inherit;font-size:.85rem;padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.reset.arm{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+footer{font-size:.82rem;color:var(--muted);display:grid;gap:6px}
+footer a{color:var(--muted)}
+@media (max-width:520px){.row,.axis{grid-template-columns:92px 1fr}.rows,.axis{min-width:420px}}
+@media (prefers-reduced-motion:reduce){.row,.progress .fill{transition:none}}
+</style>
+
+<style>body{margin:0}</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">加東五堡賞楓 12 日 · 10/08–10/17</div>
+    <h1>加東賞楓｜行前準備</h1>
+    <p class="lede">先確認證件，再看每天天氣，最後照著天氣把行李一項項打勾。勾選紀錄會留在您這支手機的瀏覽器裡，下次打開還在。</p>
+  </header>
+
+  <div class="progress" aria-live="polite"><span class="txt">已準備</span><div class="track2"><div class="fill" id="fill"></div></div><span class="txt" id="ptxt">0 / 0</span></div>
+
+  <section class="sec" aria-labelledby="s1">
+    <div class="sec-head"><span class="n">01</span><h2 id="s1">必帶證件與財務</h2><p>出門前最後再檢查一次，這一區少一樣都不能出發。</p></div>
+    <div class="groups" id="g-docs"></div>
+  </section>
+
+  <section class="sec" aria-labelledby="s2">
+    <div class="sec-head"><span class="n">02</span><h2 id="s2">每日天氣</h2><p>點分類卡可以只看那幾天。</p></div>
+    <div class="notice"><b>10/6 更新。</b>10/8–10/11 採加拿大環境部 10/5 發布的官方預報與 AccuWeather 短期預報；10/12 之後為 AccuWeather 逐日預報，天數越後面變動越大。出發後實際天氣以領隊宜倩每日更新為準。</div>
+
+    <div class="summary" aria-label="天氣分類">
+      <button class="sum t-rain" data-f="rain" aria-pressed="false"><span class="k">☔ 可能下雨</span><span class="d">D1・D4｜10/08、10/11</span><p>抵達晚上 40% 陣雨；魁北克 10/11 有雨。</p></button>
+      <button class="sum t-cold" data-f="cold" aria-pressed="false"><span class="k">🥶 早晚偏冷</span><span class="d">D5–D8｜10/12–10/15</span><p>川普朗、阿岡昆、湖區清晨 1–4°C。</p></button>
+      <button class="sum t-wind" data-f="wind" aria-pressed="false"><span class="k">💨 風大</span><span class="d">D1｜10/08</span><p>尼加拉一帶預報強風，下飛機外套拿出來。</p></button>
+      <button class="sum t-mild" data-f="mild" aria-pressed="false"><span class="k">🌤️ 溫和</span><span class="d">D2・D3・D8・D9・D10</span><p>白天 13–19°C，比 9/30 預估暖一些。</p></button>
+    </div>
+
+    <div class="filter" role="group" aria-label="篩選天數">
+      <button data-f="all" aria-pressed="true">全部 10 天</button>
+      <button data-f="rain" aria-pressed="false">☔ 下雨</button>
+      <button data-f="cold" aria-pressed="false">🥶 偏冷</button>
+      <button data-f="wind" aria-pressed="false">💨 風大</button>
+      <button data-f="mild" aria-pressed="false">🌤️ 溫和</button>
+    </div>
+
+    <div class="chart" aria-label="每日高低溫">
+      <h2 style="margin-bottom:12px;font-size:1.05rem">每日高低溫（°C）</h2>
+      <div class="rows" id="rows"></div>
+      <div class="axis"><span></span><div class="ticks" id="ticks"></div></div>
+    </div>
+
+    <div class="days" id="days"></div>
+  </section>
+
+  <section class="sec" aria-labelledby="s3">
+    <div class="sec-head"><span class="n">03</span><h2 id="s3">配合天氣的打包清單</h2><p>小標籤寫的是「哪一天會用到」，方便您判斷放託運還是隨身。</p></div>
+    <div class="groups" id="g-pack"></div>
+    <button class="reset" id="reset" type="button">清除所有勾選</button>
+  </section>
+
+  <footer>
+    <div>天氣資料來源：加拿大環境部 7 天預報（<a href="https://weather.gc.ca/en/location/index.html?coords=43.655,-79.383">多倫多</a>・<a href="https://weather.gc.ca/en/location/index.html?coords=45.509,-73.588">蒙特婁</a>・<a href="https://weather.gc.ca/en/location/index.html?coords=45.421,-75.697">渥太華</a>）；AccuWeather 10 月逐日預報（<a href="https://www.accuweather.com/en/ca/quebec/g1r/october-weather/50011">魁北克</a>・<a href="https://www.accuweather.com/en/ca/mont-tremblant/j8e/october-weather/55881">川普朗</a>・<a href="https://www.accuweather.com/en/ca/huntsville/p1h/october-weather/54941">亨茨維爾</a>・<a href="https://www.accuweather.com/en/ca/niagara-falls/l2g/october-weather/55052">尼加拉瀑布</a>・<a href="https://www.accuweather.com/en/ca/ottawa/k1p/october-weather/55487">渥太華</a>・<a href="https://www.accuweather.com/en/ca/toronto/m5h/october-weather/55488">多倫多</a>）。</div>
+    <div>有任何問題隨時問領隊宜倩 🍁</div>
+  </footer>
+</div>
+
+<script>
+const DAYS=[
+ {d:"D1",date:"10/08（四）",place:"抵達多倫多",lo:9,hi:19,sky:"晴時多雲，40% 陣雨；尼加拉一帶預報強風",src:"官方預報",t:["rain","wind"],notes:["晚上下飛機風大，外套先放隨身包包","台灣比加東快 12 小時，今晚好好睡"],wear:"外套＋摺疊傘放隨身"},
+ {d:"D2",date:"10/09（五）",place:"千島湖 → 蒙特婁",lo:7,hi:15,sky:"千島湖一帶 40% 陣雨；蒙特婁晴朗",src:"官方預報",t:["mild"],notes:["船頂風大，體感比氣溫低","車程長，容易暈車的貴賓先吃藥"],wear:"防風外套＋帽子"},
+ {d:"D3",date:"10/10（六）",place:"蒙特婁 → 魁北克",lo:4,hi:13,sky:"晴時多雲，魁北克晚上約 4°C",src:"官方預報",t:["mild"],notes:["舊城石板路好走的鞋最重要","晚上散步很涼，帶厚外套"],wear:"白天毛衣＋外套，晚上加圍巾"},
+ {d:"D4",date:"10/11（日）",place:"魁北克近郊",lo:9,hi:17,sky:"有雨或毛毛雨（蒙特婁一帶 40% 陣雨）",src:"短期預報",t:["rain"],notes:["峽谷、瀑布水氣大，吊橋木棧道濕滑","雨天石板路滑，小心腳步"],wear:"防水外套＋防滑鞋，雨傘放隨身"},
+ {d:"D5",date:"10/12（一）",place:"洛朗山區 → 川普朗",lo:4,hi:14,sky:"多雲，山頂更冷、風大",src:"長期預報",t:["cold"],notes:["感恩節連假，景點人多"],wear:"毛帽＋手套＋圍巾全部帶上纜車"},
+ {d:"D6",date:"10/13（二）",place:"川普朗湖 → 渥太華",lo:2,hi:16,sky:"晴時多雲，渥太華清晨約 2°C",src:"長期預報",t:["cold"],notes:["早晚溫差大，清晨接近 0°C"],wear:"早上遊船穿最保暖的一套，下午再脫"},
+ {d:"D7",date:"10/14（三）",place:"阿岡昆公園 → 慕斯科卡",lo:3,hi:14,sky:"陰天，清晨約 3°C",src:"長期預報",t:["cold"],notes:["公園內手機訊號弱、洗手間少"],wear:"發熱衣＋毛衣＋外套，帽子手套都要"},
+ {d:"D8",date:"10/15（四）",place:"湖區 → 尼加拉湖濱小鎮・酒莊",lo:1,hi:19,sky:"湖區清晨約 1°C；尼加拉 9–19°C 晴時多雲",src:"長期預報",t:["cold","mild"],notes:["全程溫差最大的一天","冰酒、楓糖漿放託運（入境台灣免稅酒類 1 公升）"],wear:"早上保暖、下午變暖，穿脫方便"},
+ {d:"D9",date:"10/16（五）",place:"尼加拉瀑布",lo:9,hi:19,sky:"晴時多雲",src:"長期預報",t:["mild"],notes:["遊船一定會濕，可以準備防水袋裝手機"],wear:"防水外套＋防水鞋或備用襪子"},
+ {d:"D10",date:"10/17（六）",place:"Outlet → 多倫多 → 機場",lo:7,hi:15,sky:"陰天，多倫多可能有零星小雨",src:"長期預報",t:["mild"],notes:["標價不含稅（+13%），沒有觀光客退稅","液體放託運、行動電源放手提"],wear:"方便活動，外套放隨身"}
+];
+const LBL={rain:["☔ 可能下雨","t-rain"],cold:["🥶 偏冷","t-cold"],wind:["💨 風大","t-wind"],mild:["🌤️ 溫和","t-mild"]};
+
+/* checklist data: [id, 文字, 補充說明, 標籤類別, 標籤文字] */
+const DOCS=[{title:"🪪 證件與財務",key:true,items:[
+ ["d1","護照正本","效期需在回國日算起 6 個月以上"],
+ ["d2","加拿大 eTA 電子旅行證","核准信存手機截圖；入境時以護照為準"],
+ ["d3","護照影本一份","與正本分開放"],
+ ["d4","信用卡 2 張","加拿大幾乎都能刷卡、感應付款"],
+ ["d5","少量加幣現金","小費、零用；不必換太多"],
+ ["d6","旅遊平安險／不便險資料","保單號碼與緊急聯絡電話存手機"]
+]}];
+const PACK=[
+ {title:"🧥 衣物（洋蔥式）",items:[
+  ["c1","發熱衣或長袖排汗衣","清晨 1–4°C 的日子最需要","cold","D5–D8"],
+  ["c2","毛衣或刷毛外套","中層保暖","cold","每天"],
+  ["c3","防風防水外套","輕羽絨＋防水外套最萬用","rain","D1・D4"],
+  ["c4","長褲 2–3 件","",null,null],
+  ["c5","毛帽、手套、圍巾","纜車山頂、清晨遊船、阿岡昆","cold","D5–D7"],
+  ["c6","好走、防滑的鞋，最好防水","舊城石板路、步道、雨天","rain","D4"],
+  ["c7","備用襪子","瀑布遊船、雨天換穿","rain","D4・D9"],
+  ["c8","睡衣、換洗衣物","",null,null]
+ ]},
+ {title:"☔ 雨具與防水",items:[
+  ["r1","摺疊傘","抵達晚上與魁北克有雨","rain","D1・D4"],
+  ["r2","輕便雨衣","雨大時比傘方便","rain","D4"],
+  ["r3","手機防水袋","建議攜帶","rain","D9"]
+ ]},
+ {title:"🔌 3C 電器",items:[
+  ["e1","手機充電線、充電頭","插座與台灣相同，不用轉接頭"],
+  ["e2","行動電源","只能放手提行李，不可託運"],
+  ["e3","耳機","長車程聽音樂、休息"]
+ ]},
+ {title:"💊 藥品與清潔",items:[
+  ["m1","個人常備藥、慢性病藥","帶足天數，放隨身"],
+  ["m2","暈車藥","千島湖、阿岡昆等長車程","mild","D2・D7"],
+  ["m3","感冒藥、腸胃藥","早晚溫差大"],
+  ["m4","護唇膏、乳液、護手霜","秋天乾冷","cold","D5–D8"],
+  ["m5","牙刷、牙膏、拖鞋","北美飯店多半不提供"],
+  ["m6","濕紙巾、隨身衛生紙","阿岡昆公園洗手間少"]
+ ]},
+ {title:"🎒 其他",items:[
+  ["o1","行李綁帶",""],
+  ["o2","摺疊購物袋","Outlet、伴手禮"],
+  ["o3","眼罩、耳塞、頸枕","長途飛行"],
+  ["o4","預留行李空間","楓糖漿、冰酒要放託運"]
+ ]}
+];
+
+const KEY="pcan-1008-checklist-v1";
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){return {}}}
+function save(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+let state=load();
+
+function renderGroups(el,groups){
+  groups.forEach(g=>{
+    const box=document.createElement("div");box.className="group"+(g.key?" key":"");
+    box.innerHTML=`<h3><span>${g.title}</span><span class="cnt"></span></h3>`;
+    g.items.forEach(([id,txt,note,cat,when])=>{
+      const lab=document.createElement("label");lab.className="item";
+      const why=cat?`<span class="why ${LBL[cat][1]}">${when}</span>`:"";
+      lab.innerHTML=`<input type="checkbox" id="${id}"><span class="t"><span>${txt}</span>${why}${note?`<small>${note}</small>`:""}</span>`;
+      const cb=lab.querySelector("input");cb.checked=!!state[id];
+      cb.addEventListener("change",()=>{state[id]=cb.checked;save(state);update()});
+      box.appendChild(lab);
+    });
+    el.appendChild(box);
+  });
+}
+renderGroups(document.getElementById("g-docs"),DOCS);
+renderGroups(document.getElementById("g-pack"),PACK);
+
+function update(){
+  const all=document.querySelectorAll(".item input"),on=document.querySelectorAll(".item input:checked");
+  document.getElementById("fill").style.width=(all.length?on.length/all.length*100:0)+"%";
+  document.getElementById("ptxt").textContent=on.length+" / "+all.length;
+  document.querySelectorAll(".group").forEach(g=>{
+    const a=g.querySelectorAll("input").length,c=g.querySelectorAll("input:checked").length,el=g.querySelector(".cnt");
+    el.textContent=c===a?"✓ 完成":c+" / "+a;el.classList.toggle("done",c===a);
+  });
+}
+update();
+
+const rb=document.getElementById("reset");let armed=false,tmr;
+rb.addEventListener("click",()=>{
+  if(!armed){armed=true;rb.classList.add("arm");rb.textContent="再按一次確認清除";tmr=setTimeout(()=>{armed=false;rb.classList.remove("arm");rb.textContent="清除所有勾選"},4000);return}
+  clearTimeout(tmr);armed=false;rb.classList.remove("arm");rb.textContent="已清除";
+  state={};save(state);document.querySelectorAll(".item input").forEach(c=>c.checked=false);update();
+  setTimeout(()=>rb.textContent="清除所有勾選",1500);
+});
+
+/* weather */
+const MIN=0,MAX=20,pct=v=>((v-MIN)/(MAX-MIN))*100;
+const rows=document.getElementById("rows"),days=document.getElementById("days"),ticks=document.getElementById("ticks");
+[0,5,10,15,20].forEach(v=>{const s=document.createElement("span");s.style.left=pct(v)+"%";s.textContent=v+"°";ticks.appendChild(s)});
+DAYS.forEach(x=>{
+  const r=document.createElement("div");r.className="row";r.dataset.t=x.t.join(" ");
+  r.innerHTML=`<div class="lab"><span>${x.d}</span>${x.date.slice(0,5)}</div><div class="track"><div class="grid"></div><div class="bar" style="left:${pct(x.lo)}%;width:${pct(x.hi)-pct(x.lo)}%"><b class="lo">${x.lo}</b><b class="hi">${x.hi}</b></div></div>`;
+  rows.appendChild(r);
+  const c=document.createElement("article");c.className="day";c.dataset.t=x.t.join(" ");
+  c.innerHTML=`<header><span class="dn">${x.d}・${x.date}</span><div class="tags">${x.t.map(k=>`<span class="tag ${LBL[k][1]}">${LBL[k][0]}</span>`).join("")}</div></header>
+  <h3>${x.place}</h3><div class="temp">${x.lo}–${x.hi}°C<small>${x.sky}</small></div><div class="src">${x.src}</div>
+  <ul>${x.notes.map(n=>`<li>${n}</li>`).join("")}</ul><div class="wear"><b>穿搭</b>${x.wear}</div>`;
+  days.appendChild(c);
+});
+function apply(f){
+  document.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.f===f)));
+  document.querySelectorAll(".row").forEach(r=>r.classList.toggle("dim",f!=="all"&&!r.dataset.t.split(" ").includes(f)));
+  document.querySelectorAll(".day").forEach(c=>c.hidden=f!=="all"&&!c.dataset.t.split(" ").includes(f));
+}
+document.querySelectorAll("[data-f]").forEach(b=>b.addEventListener("click",()=>{
+  const f=b.dataset.f,on=b.getAttribute("aria-pressed")==="true"&&f!=="all";apply(on?"all":f);
+}));
+</script>
+
+</body>
+</html>
